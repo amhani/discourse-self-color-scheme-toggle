@@ -19,8 +19,10 @@ export default class ColorSchemeToggler extends Component {
   get toggleButtonIcon() {
     switch (this.OSMode) {
       case "dark":
+        this.storedOverride === "light" ? document.body.classList.remove("dark"): document.body.classList.add("dark");
         return this.storedOverride === "light" ? "moon" : "sun";
       case "light":
+        this.storedOverride === "dark" ? document.body.classList.add("dark"): document.body.classList.remove("dark");
         return this.storedOverride === "dark" ? "sun" : "moon";
     }
   }
@@ -37,6 +39,7 @@ export default class ColorSchemeToggler extends Component {
       case "light":
         if (this.keyValueStore.getItem(COLOR_SCHEME_OVERRIDE_KEY) === "dark") {
           this.keyValueStore.removeItem(COLOR_SCHEME_OVERRIDE_KEY);
+          document.body.classList.remove("dark");
         } else {
           this.keyValueStore.setItem(COLOR_SCHEME_OVERRIDE_KEY, "dark");
         }
@@ -44,6 +47,7 @@ export default class ColorSchemeToggler extends Component {
       case "dark":
         if (this.keyValueStore.getItem(COLOR_SCHEME_OVERRIDE_KEY) !== "light") {
           this.keyValueStore.setItem(COLOR_SCHEME_OVERRIDE_KEY, "light");
+          document.body.classList.remove("light");
         } else {
           this.keyValueStore.removeItem(COLOR_SCHEME_OVERRIDE_KEY);
         }
